@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import * as yup from "yup";
+import axios from "axios";
+
+// form schema goes here
 
 export default function Form() {
+    // slice of state for from inputs
+    const [formState, setFormState] = useState({
+        name: "",
+        email: "",
+        password: "",
+        terms: ""
+    });
+
+    // onChange function
+    const inputChange = e => {
+        e.persist();
+        const newFormData = {
+            ...formState,
+            [e.target.name]:
+                e.target.type === "checkbox" ? e.target.checked : e.target.value
+        };
+        // validateChange(e);
+        setFormState(newFormData);
+    };
+
     return (
         <div>
             <form>
@@ -10,8 +34,8 @@ export default function Form() {
                         id="name"
                         type="text"
                         name="name"
-                        // value={}
-                        // onChange={}
+                        value={formState.name}
+                        onChange={inputChange}
                     />
                 </label>
                 <br />
@@ -21,8 +45,8 @@ export default function Form() {
                         id="email"
                         type="text"
                         name="email"
-                        // value={}
-                        // onChange={}
+                        value={formState.email}
+                        onChange={inputChange}
                     />
                 </label>
                 <br />
@@ -32,8 +56,8 @@ export default function Form() {
                         id="password"
                         type="text"
                         name="password"
-                        // value={}
-                        // onChange={}
+                        value={formState.password}
+                        onChange={inputChange}
                     />
                 </label>
                 <br />
@@ -41,8 +65,8 @@ export default function Form() {
                     <input
                         type="checkbox"
                         name="terms"
-                        // checked={}
-                        // onChange={}
+                        checked={formState.terms}
+                        onChange={inputChange}
                     />
                     Terms and Conditions
                 </label>
